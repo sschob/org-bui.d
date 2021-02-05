@@ -4,8 +4,16 @@
 
 (load-file "../init.el")
 
-(require 'ox)
+(require 'org)
 (require 'ox-beamer)
+(require 'org-attach)
+(require 'ox-latex)
+(require 'ox-ipynb)
+(require 'jupyter)
+
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((jupyter . t)
+                               (python . t)))
 
 ;;; Code:
 (defun orgb-export-buffer-beamer (filename &optional header_file header_func)
