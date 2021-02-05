@@ -45,4 +45,4 @@
   (find-file src_file)
   (orgb-export-buffer-beamer dest_file header_file))
 
-(kill-emacs)
+(kill-emacs 0)
