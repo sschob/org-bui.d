@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+":"; exec emacs --quick --script "$0" -- "$@" # -*- mode: emacs-lisp; lexical-binding: t; -*-
+;;; bin/export_lecture
+
+(require 'ox)
+(require 'ox-beamer)
+
+;;; Code:
+(defun orgb-export-buffer-beamer (filename &optional header_file header_func)
+  (let ((old-buffer (current-buffer))
+        (outfile (format "%s.%s" (file-name-sans-extension filename) "tex" )))
+    (with-temp-buffer
+      (if header_func
+          (funcall header_func))
+      (if header_file
+          (insert (format "#+include: %s\n" header_file)))
+      (insert-buffer-substring old-buffer)
+      (org-export-to-file 'beamer outfile nil nil nil nil nil
+                          (lambda (outfile) (org-latex-compile outfile))))))
+
+(defun insert_header_lecturer()
+  (insert "#+EXCLUDE_TAGS: lecturer \n")
+  )
+
+(pop argv)
+(let* ((src_file (pop argv))
+       (header_file (pop argv))
+       (dest_file (pop argv))
+       )
+  (unless dest_file
+    (setq dest_file (format "%s.%s" (file-name-sans-extension src_file) "pdf" ))
+    )
+  (find-file src_file)
+  (orgb-export-buffer-beamer dest_file header_file))
+
+(kill-emacs)
