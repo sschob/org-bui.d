@@ -5,17 +5,6 @@
 (setq this-file-path  (file-name-directory load-file-name))
 (load-file (format "%s/../init.el" this-file-path))
 
-(require 'org)
-(require 'ox-beamer)
-(require 'org-attach)
-(require 'ox-latex)
-(require 'ox-ipynb)
-(require 'jupyter)
-
-(org-babel-do-load-languages 'org-babel-load-languages
-                             '((jupyter . t)
-                               (python . t)))
-
 ;;; Code:
 (defun orgb-export-buffer-beamer (filename &optional header_file header_func)
   (let ((old-buffer (current-buffer))

@@ -20,6 +20,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (load-file (format "%s/packages.el" user-emacs-directory))
+(load-file (concat user-emacs-directory "config.el"))
 
 ;; load it if it exists
 (let ((project-settings (format "%s/../project_init.el" user-emacs-directory)))
