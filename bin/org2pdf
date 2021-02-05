@@ -2,6 +2,8 @@
 ":"; exec emacs --quick --script "$0" -- "$@" # -*- mode: emacs-lisp; lexical-binding: t; -*-
 ;;; bin/export_lecture
 
+(load-file "../init.el")
+
 (require 'ox)
 (require 'ox-beamer)
 
