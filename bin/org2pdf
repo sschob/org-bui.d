@@ -3,10 +3,24 @@
 ;;; bin/export_lecture
 
 
-(setq working_dir (getenv-internal "PWD"))
-(setq this-file-dir  (file-name-directory load-file-name))
-
 ;;; Code:
+;;;
+;;;
+;;;
+
+(defun usage()
+   (with-temp-buffer
+    (insert (format "%s %s [OPTIONS] [SRC_FILE]\n"
+                    "[1mUsage:[0m"
+                    (file-name-nondirectory load-file-name))
+            "A command line interface for exporting org-mode files. to beamer."
+            "\n"
+            "[1mOptions:[0m\n"
+            "  -H --header FILE \tHeader file\n"
+            "  -o --output FILENAME \tOutput file name\n")
+    (princ (buffer-string))) )
+
+
 (defun orgb-export-buffer-beamer (filename &optional header_file header_func)
   (let ((old-buffer (current-buffer))
         (outfile (format "%s.%s" (file-name-sans-extension filename) "tex" )))
@@ -19,30 +33,50 @@
       (org-export-to-file 'beamer outfile nil nil nil nil nil
                           (lambda (outfile) (org-latex-compile outfile))))))
 
-(defun insert_header_lecturer()
-  (insert "#+EXCLUDE_TAGS: lecturer \n")
-  )
 
-(pop argv)
-(let* ((src_file (pop argv))
-       (header_file (pop argv))
-       (dest_file (pop argv))
-       )
+;; main
+(setq working_dir (concat (getenv-internal "PWD") "/"))
+(setq this-file-dir  (file-name-directory load-file-name))
 
-  (unless src_file
+
+(let (src-file header-file output-file)
+  (pop argv)
+  (while argv
+    (let ((arg (pop argv)))
+      (pcase arg
+        ((or "-h" "--help")
+         (usage)
+         (error ""))
+        ((or "-o" "--output")
+         (setq output-file (pop argv)))
+        ((or "-H" "--header")
+         (setq header-file (pop argv)))
+        ((guard (file-exists-p arg))
+         (setq src-file arg))
+        (_ (error "Unknown option or file: %s" arg)))))
+
+  (unless (or (not header-file) (file-exists-p header-file))
+    (print ("Header-file does not exist"))
+    )
+
+  (unless src-file
     (progn
       (print "Missing argument src file")
-      (kill-emacs 0)))
+      (error)))
 
-  (unless dest_file
-    (setq dest_file (format "%s.%s" (file-name-sans-extension src_file) "pdf" )))
+  (unless output-file
+    (setq output-file (format "%s.%s" (file-name-sans-extension src-file) "pdf" )))
 
-  (setq dest_file (concat working_dir "/" dest_file))
-  (setq header_file (concat working_dir "/" header_file))
+  (setq output-file (concat working_dir  output-file))
+
+  (if header-file
+      (setq header-file (concat working_dir  header-file))
+    )
 
   (load-file (concat this-file-dir "../init.el"))
-
-  (find-file src_file)
-  (orgb-export-buffer-beamer dest_file header_file))
+  (find-file src-file)
+  (orgb-export-buffer-beamer output-file header-file))
 
 (kill-emacs 0)
+
+;;; org2pdf ends here
