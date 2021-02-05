@@ -2,8 +2,9 @@
 ":"; exec emacs --quick --script "$0" -- "$@" # -*- mode: emacs-lisp; lexical-binding: t; -*-
 ;;; bin/export_lecture
 
-(setq this-file-path  (file-name-directory load-file-name))
-(load-file (format "%s/../init.el" this-file-path))
+
+(setq working_dir (getenv-internal "PWD"))
+(setq this-file-dir  (file-name-directory load-file-name))
 
 ;;; Code:
 (defun orgb-export-buffer-beamer (filename &optional header_file header_func)
