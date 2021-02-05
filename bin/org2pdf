@@ -28,9 +28,20 @@
        (header_file (pop argv))
        (dest_file (pop argv))
        )
+
+  (unless src_file
+    (progn
+      (print "Missing argument src file")
+      (kill-emacs 0)))
+
   (unless dest_file
-    (setq dest_file (format "%s.%s" (file-name-sans-extension src_file) "pdf" ))
-    )
+    (setq dest_file (format "%s.%s" (file-name-sans-extension src_file) "pdf" )))
+
+  (setq dest_file (concat working_dir "/" dest_file))
+  (setq header_file (concat working_dir "/" header_file))
+
+  (load-file (concat this-file-dir "../init.el"))
+
   (find-file src_file)
   (orgb-export-buffer-beamer dest_file header_file))
 
