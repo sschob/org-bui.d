@@ -2,7 +2,8 @@
 ":"; exec emacs --quick --script "$0" -- "$@" # -*- mode: emacs-lisp; lexical-binding: t; -*-
 ;;; bin/export_lecture
 
-(load-file "../init.el")
+(setq this-file-path  (file-name-directory load-file-name))
+(load-file (format "%s/../init.el" this-file-path))
 
 (require 'org)
 (require 'ox-beamer)
