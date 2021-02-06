@@ -16,12 +16,13 @@
             "A command line interface for exporting org-mode files. to beamer."
             "\n"
             "[1mOptions:[0m\n"
+            "  -t --tex \tExport with latex backend\n"
             "  -H --header FILE \tHeader file\n"
             "  -o --output FILENAME \tOutput file name\n")
     (princ (buffer-string))) )
 
 
-(defun orgb-export-buffer-beamer (filename &optional header_file header_func)
+(defun orgb-export-buffer-beamer (type filename &optional header_file header_func)
   (let ((old-buffer (current-buffer))
         (outfile (format "%s.%s" (file-name-sans-extension filename) "tex" )))
     (with-temp-buffer
@@ -30,7 +31,7 @@
       (if header_file
           (insert (format "#+include: %s\n" header_file)))
       (insert-buffer-substring old-buffer)
-      (org-export-to-file 'beamer outfile nil nil nil nil nil
+      (org-export-to-file type outfile nil nil nil nil nil
                           (lambda (outfile) (org-latex-compile outfile))))))
 
 
@@ -38,6 +39,7 @@
 (setq working_dir (concat (getenv-internal "PWD") "/"))
 (setq this-file-dir  (file-name-directory load-file-name))
 
+(setq type 'beamer)
 
 (let (src-file header-file output-file)
   (pop argv)
@@ -49,6 +51,8 @@
          (error ""))
         ((or "-o" "--output")
          (setq output-file (pop argv)))
+        ((or "-t" "--tex")
+         (setq type 'latex))
         ((or "-H" "--header")
          (setq header-file (pop argv)))
         ((guard (file-exists-p arg))
@@ -75,7 +79,7 @@
 
   (load-file (concat this-file-dir "../init.el"))
   (find-file src-file)
-  (orgb-export-buffer-beamer output-file header-file))
+  (orgb-export-buffer-beamer type output-file header-file))
 
 (kill-emacs 0)
 
