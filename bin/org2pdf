@@ -13,7 +13,7 @@
     (insert (format "%s %s [OPTIONS] [SRC_FILE]\n"
                     "[1mUsage:[0m"
                     (file-name-nondirectory load-file-name))
-            "A command line interface for exporting org-mode files. to beamer."
+            "A command line interface for exporting org-mode files to beamer."
             "\n"
             "[1mOptions:[0m\n"
             "  -t --tex \tExport with latex backend\n"
