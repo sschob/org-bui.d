@@ -1,0 +1,25 @@
+#+PROPERTY: header-args  :session python :kernel lecture_tib_ml
+#+TITLE: Nb_example
+
+* Imports
+Wichtige Imports
+
+* Aufgabe 1
+#+begin_src jupyter-python
+
+#+end_src
+
+** Lösung :solution:
+Das Ergebnis ist
+
+#+begin_src  jupyter-python
+def inc(x):
+    return x+1
+#+end_src
+
+* Zusammenfassung
+
+Wird haben gesehen....
+
+
+#

@@ -1,2 +1,3 @@
 #+TITLE: TEST
 #+OPTIONS: toc:nil
+#+EXCLUDE_TAGS: lecturer

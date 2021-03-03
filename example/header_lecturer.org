@@ -1,2 +1,1 @@
-#+include: header.org
-#+exclude_tags: lecturer
+#+EXCLUDE_TAGS: noexport
