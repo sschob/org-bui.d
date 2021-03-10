@@ -1,7 +1,23 @@
+# -*- org-confirm-babel-evaluate: nil; -*-
+
+* Header
+
+#+begin_src elisp :exports both
+org-confirm-babel-evaluate
+#+end_src
+
+#+RESULTS:
+
 * Header 1
 Some content
-
 #+include: ./chap2/content.org
+
+* Header 2
+some Python
+#+begin_src python :exports both :results output :session
+print ("Hello World")
+#+end_src
+
 
 * Stuff for the lecturer :lecturer:
 Only lecturer
