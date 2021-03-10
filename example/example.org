@@ -21,3 +21,7 @@ print ("Hello World")
 
 * Stuff for the lecturer :lecturer:
 Only lecturer
+
+# Local Variables:
+# org-confirm-babel-evaluate: nil
+# End:
