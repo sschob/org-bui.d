@@ -21,19 +21,17 @@
             "  -o --output FILENAME \tOutput file name\n")
     (princ (buffer-string))) )
 
-
-(defun orgb-export-buffer-beamer (type filename &optional header_file header_func)
-  (let ((old-buffer (current-buffer))
-        (outfile (format "%s.%s" (file-name-sans-extension filename) "tex" )))
+(defun orgb-export-buffer-beamer (src_file type filename &optional header_file header_func)
+  (let ((outfile (format "%s.%s" (file-name-sans-extension filename) "tex" )))
     (with-temp-buffer
       (if header_func
           (funcall header_func))
+      (find-file src-file)
+      (goto-char (point-min))
       (if header_file
           (insert (format "#+include: %s\n" header_file)))
-      (insert-buffer-substring old-buffer)
       (org-export-to-file type outfile nil nil nil nil nil
                           (lambda (outfile) (org-latex-compile outfile))))))
-
 
 ;; main
 (setq working_dir (concat (getenv-internal "PWD") "/"))
@@ -78,8 +76,7 @@
     )
 
   (load-file (concat this-file-dir "../init.el"))
-  (find-file src-file)
-  (orgb-export-buffer-beamer type output-file header-file))
+  (orgb-export-buffer-beamer src-file type output-file header-file))
 
 (kill-emacs 0)
 
