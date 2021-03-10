@@ -1,0 +1,2 @@
+* Linear classificator
+[[file:images/pic1.png]]

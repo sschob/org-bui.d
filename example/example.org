@@ -1,5 +1,7 @@
 * Header 1
 Some content
 
-* Header 2 :lecturer:
+#+include: ./chap2/content.org
+
+* Stuff for the lecturer :lecturer:
 Only lecturer
