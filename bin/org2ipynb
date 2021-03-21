@@ -17,27 +17,32 @@
             "\n"
             "[1mOptions:[0m\n"
             "  -H --header FILE \tHeader file\n"
+            "     --org         \tExport to org first\n"
             "  -o --output FILENAME \tOutput file name\n")
     (princ (buffer-string))) )
 
-
-(defun orgb-export-buffer-ipynb (filename &optional header_file header_func)
-  (let ((old-buffer (current-buffer))
-        (outfile (format "%s.%s" (file-name-sans-extension filename) "ipynb" )))
+(defun orgb-export-buffer-ipynb (file filename)
+  (let ((outfile (format "%s.%s" (file-name-sans-extension filename) "ipynb" )))
     (with-temp-buffer
-      (if header_func
-          (funcall header_func))
-      (if header_file
-          (insert-file-contents header_file))
-      (insert-buffer-substring old-buffer)
+
+      (find-file src-file)
+      (-each orgb-hook (lambda (x) (funcall x)))
+      ;; run functions in pre-export-hook
+      (-each orgb-pre-export-hook (lambda (x) (funcall x)))
       (with-current-buffer (ox-ipynb-export-to-ipynb-buffer)
         (write-file outfile))
       )))
 
-
 ;; main
+;;
+
 (setq working_dir (concat (getenv-internal "PWD") "/"))
 (setq this-file-dir  (file-name-directory load-file-name))
+(setq orgb-hook '())
+(setq orgb-pre-export-hook '())
+
+(load-file (concat this-file-dir "../init.el"))
+(require 'dash)
 
 (let (src-file header-file output-file)
   (pop argv)
@@ -47,10 +52,15 @@
         ((or "-h" "--help")
          (usage)
          (error ""))
+        ((or "--org")
+         (add-to-list 'orgb-pre-export-hook #'org-org-export-as-org)
+         ;; or could we use a hook in ox-ipynb?
+         )
         ((or "-o" "--output")
          (setq output-file (pop argv)))
         ((or "-H" "--header")
-         (setq header-file (pop argv)))
+         (setq header-file (pop argv))
+         )
         ((guard (file-exists-p arg))
          (setq src-file arg))
         (_ (error "Unknown option or file: %s" arg)))))
@@ -65,17 +75,17 @@
       (error)))
 
   (unless output-file
-    (setq output-file (format "%s.%s" (file-name-sans-extension src-file) "pdf" )))
+    (setq output-file (format "%s.%s" (file-name-sans-extension src-file) "pdf")))
 
   (setq output-file (concat working_dir  output-file))
 
   (if header-file
-      (setq header-file (concat working_dir  header-file))
-    )
+      (progn
+        (setq header-file (concat working_dir  header-file))
+        (add-to-list 'orgb-hook #'(lambda () (progn (princ (format "insert header file")) (goto-char (point-min)) (insert (format "#+include: %s\n" header-file)))))
+    ))
 
-  (load-file (concat this-file-dir "../init.el"))
-  (find-file src-file)
-  (orgb-export-buffer-ipynb output-file header-file))
+  (orgb-export-buffer-ipynb src-file output-file))
 
 (kill-emacs 0)
 
