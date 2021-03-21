@@ -1,1 +1,11 @@
 * Org-build
+
+** org2pdf
+Export to PDF  (beamer or latex), see =org2pdf --help=
+
+** org2ipynb
+Export to Jupyter notebook.
+
+*** Features
+- If =--org=  is given the file is first exported to ORG to respect =INCLUDE_TAGS= and =EXCLUDE_TAGS=.
+- Include header files with =-H= or =--header=
