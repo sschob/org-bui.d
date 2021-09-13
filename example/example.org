@@ -9,13 +9,22 @@ org-confirm-babel-evaluate
 #+RESULTS:
 
 * Header 1
-Some content
 #+include: ./chap2/content.org
 
 * Header 2
 some Python
 #+begin_src python :exports both :results output :session
 print ("Hello World")
+#+end_src
+
+
+* Jupyter Plot
+#+begin_src jupyter-python :exports results :session foo_bar :kernel bpw
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+x= np.linspace(0,1,100)
+plt.plot(x, x**2);
 #+end_src
 
 
