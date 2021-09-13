@@ -1,4 +1,4 @@
-#+PROPERTY: header-args  :session python :kernel lecture_tib_ml
+#+PROPERTY: header-args  :session python :kernel lecture_tib_ml :eval never
 #+TITLE: Nb_example
 
 * Imports
@@ -6,7 +6,9 @@ Wichtige Imports
 
 * Aufgabe 1
 #+begin_src jupyter-python
-
+for i in range(10):
+    for j in range(10):
+        print(i,j)
 #+end_src
 
 ** Lösung :solution:
@@ -15,6 +17,29 @@ Das Ergebnis ist
 #+begin_src  jupyter-python
 def inc(x):
     return x+1
+#+end_src
+
+* Aufgabe 2
+** Unteraufhabe 1
+Was macht die Klasse =Foo=?
+#+begin_src jupyter-python
+class Foo:
+
+    def __init__(self, a):
+        """
+        Constructor:
+            a: blub
+        """
+        self.a = a
+
+    def foo(self):
+        return self.a
+#+end_src
+** Unteraufgabe
+#+begin_src jupyter-python
+for i in range(10):
+    for j in range(10):
+        print(i,j)
 #+end_src
 
 * Zusammenfassung
