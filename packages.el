@@ -31,7 +31,8 @@
 (straight-use-package '(ox-ipynb
                         :host github
                         :repo "jkitchin/ox-ipynb"
-                        :check-out-commit "8637a11b07c59b8c83546ed29212af3ea6dd70a9"))
+                        :check-out-commit "a59349bb66d4f5595bc97a940d1669fe77113c8c"
+                        ))
 
 (straight-use-package 'jupyter)
 
