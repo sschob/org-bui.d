@@ -14,7 +14,7 @@ clean:
 	$(ORG2PDF) $< -H header_lecturer.org -o $@
 
 exercise.ipynb: nb_exercise.org
-	$(ORG2IPYNB) $< -H header_exercise.org -o $@
+	$(ORG2IPYNB) $< -E solution -H header_exercise.org -o $@
 
 solution.ipynb: nb_exercise.org
 	$(ORG2IPYNB) $< -H header_solution.org -o $@
