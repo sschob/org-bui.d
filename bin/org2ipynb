@@ -33,6 +33,11 @@
         (write-file outfile))
       )))
 
+ (defun org-remove-headlines (backend)
+  "Remove headlines with  exclude_tag."
+  (org-map-entries (lambda () (delete-region (point-at-bol) (point-at-eol)))
+                   exclude_tag))
+
 ;; main
 ;;
 
@@ -55,6 +60,10 @@
         ((or "--org")
          (add-to-list 'orgb-pre-export-hook #'org-org-export-as-org)
          ;; or could we use a hook in ox-ipynb?
+         )
+        ((or "-E" "--exclude")
+         (setq exclude_tag (pop argv))
+         (add-hook 'org-export-before-processing-hook #'org-remove-headlines)
          )
         ((or "-o" "--output")
          (setq output-file (pop argv)))
@@ -84,6 +93,8 @@
         (setq header-file (concat working_dir  header-file))
         (add-to-list 'orgb-hook #'(lambda () (progn (princ (format "insert header file")) (goto-char (point-min)) (insert (format "#+include: %s\n" header-file)))))
     ))
+
+
 
   (orgb-export-buffer-ipynb src-file output-file))
 
