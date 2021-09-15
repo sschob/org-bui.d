@@ -7,6 +7,15 @@
 ;;;
 ;;;
 ;;;
+;;;
+
+;;; Global variables
+;;;
+;;;
+
+(defvar orgb-hook nil)
+(defvar orgb-pre-export-hook nil "Hooks run before export")
+(defvar exclude_tag "" "String passed to org-map-entries")
 
 (defun usage()
    (with-temp-buffer
