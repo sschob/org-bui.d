@@ -12,6 +12,9 @@ for i in range(10):
 #+end_src
 
 ** Lösung :solution:
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 Das Ergebnis ist
 
 #+begin_src  jupyter-python
@@ -20,7 +23,7 @@ def inc(x):
 #+end_src
 
 * Aufgabe 2
-** Unteraufhabe 1
+** Unteraufgabe 1
 Was macht die Klasse =Foo=?
 #+begin_src jupyter-python
 class Foo:
@@ -35,12 +38,19 @@ class Foo:
     def foo(self):
         return self.a
 #+end_src
+
+*** Lösung :solution:
+Antwort: Klasse FO ist Ziemlich sinnlos.
+
 ** Unteraufgabe
 #+begin_src jupyter-python
 for i in range(10):
     for j in range(10):
         print(i,j)
 #+end_src
+*** Lösung :solution:
+Antwort: Doppelschleife
+
 
 * Zusammenfassung
 
