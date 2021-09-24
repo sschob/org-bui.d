@@ -16,6 +16,7 @@
 (defvar orgb-hook nil)
 (defvar orgb-pre-export-hook nil "Hooks run before export")
 (defvar exclude_tag "" "String passed to org-map-entries")
+(defvar header-file nil)
 
 (defun usage()
    (with-temp-buffer
@@ -35,7 +36,7 @@
     (with-temp-buffer
 
       (find-file src-file)
-      (-each orgb-hook (lambda (x) (funcall x)))
+      ;(-each orgb-hook (lambda (x) (funcall x)))
       ;; run functions in pre-export-hook
       (run-hooks 'orgb-hook)
       (run-hooks 'orgb-pre-export-hook)
@@ -100,12 +101,14 @@
   (unless output-file
     (setq output-file (format "%s.%s" (file-name-sans-extension src-file) "pdf")))
 
-  (setq output-file (concat working_dir  output-file))
+  (setq output-file (concat working_dir output-file))
 
   (if header-file
       (progn
+        (princ (format "%s\n" header-file))
         (setq header-file (concat working_dir  header-file))
-        (add-to-list 'orgb-hook #'(lambda () (progn (princ (format "insert header file")) (goto-char (point-min)) (insert (format "#+include: %s\n" header-file)))))
+        ;;;(add-to-list 'orgb-hook #'(lambda () (progn (princ (format "insert header file\n")) (goto-char (point-min)) (insert (format "#+include: %s\n" header-file)))))
+        (add-hook 'orgb-hook #'(lambda () (progn (princ (format "insert header file\n")) (goto-char (point-min)) (insert (format "#+include: %s\n" header-file)))))
     ))
 
   (orgb-export-buffer-ipynb src-file output-file))
