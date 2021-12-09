@@ -7,7 +7,7 @@ Command line tool to export org files to PDF or ipynb.
 Export to PDF  (beamer or latex), see =org2pdf --help=
 
 Options:
-- =-t --tex= tExport with latex backend
+- =-t --tex= Export with latex backend
 - =-H --header FILE= Header file
 - =-o --output FILENAME= Output file name
 
