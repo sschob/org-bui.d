@@ -1,11 +1,21 @@
 * Org-build
 
+Export org files to PDF or ipynb using the command line.
+=org-build= uses its own emacs config and package cache.
+
 ** org2pdf
 Export to PDF  (beamer or latex), see =org2pdf --help=
+
+Options:
+- =-t --tex= tExport with latex backend
+- =-H --header FILE= Header file
+- =-o --output FILENAME= Output file name
 
 ** org2ipynb
 Export to Jupyter notebook.
 
-*** Features
-- If =--org=  is given the file is first exported to ORG to respect =INCLUDE_TAGS= and =EXCLUDE_TAGS=.
+Options:
 - Include header files with =-H= or =--header=
+- Delete RESULTS of cells with =-D= or =--delete=
+- Exclude tags with  =-E TAG= or =--exclude TAG=
+- =--org=:  the file is first exported to ORG to respect =INCLUDE_TAGS= and =EXCLUDE_TAGS= (better use =-E=).
