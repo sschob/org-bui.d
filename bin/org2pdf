@@ -34,9 +34,9 @@
                           (lambda (outfile) (org-latex-compile outfile))))))
 
 ;; main
+(defvar init-file nil)
 (setq working_dir (concat (getenv-internal "PWD") "/"))
 (setq this-file-dir  (file-name-directory load-file-name))
-
 (setq type 'beamer)
 
 (let (src-file header-file output-file)
@@ -47,6 +47,8 @@
         ((or "-h" "--help")
          (usage)
          (error ""))
+        ((or "-i" "--init-file")
+         (setq init-file (pop argv)))
         ((or "-o" "--output")
          (setq output-file (pop argv)))
         ((or "-t" "--tex")
@@ -74,6 +76,10 @@
   (if header-file
       (setq header-file (concat working_dir  header-file))
     )
+
+  (if init-file
+      (load-file init-file)
+      )
 
   (load-file (concat this-file-dir "../init.el"))
   (setq org-confirm-babel-evaluate nil)
