@@ -1,6 +1,6 @@
 * Org-build
 
-Export org files to PDF or ipynb using the command line.
+Command line tool to export org files to PDF or ipynb.
 =org-build= uses its own emacs config and package cache.
 
 ** org2pdf
@@ -12,7 +12,7 @@ Options:
 - =-o --output FILENAME= Output file name
 
 ** org2ipynb
-Export to Jupyter notebook.
+Export to Jupyter notebook, see =org2ipynb --help=:
 
 Options:
 - Include header files with =-H= or =--header=
