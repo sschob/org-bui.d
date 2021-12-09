@@ -28,7 +28,10 @@
             "[1mOptions:[0m\n"
             "  -H --header FILE \tHeader file\n"
             "     --org         \tExport to org first\n"
-            "  -o --output FILENAME \tOutput file name\n")
+            "  -o --output FILENAME \tOutput file name\n"
+	    "  -D --delete      \tDelete output \n"
+	    "  -E --exclude TAG \tExclude tag TAG\n"
+    )
     (princ (buffer-string))) )
 
 (defun orgb-export-buffer-ipynb (file filename)
@@ -75,6 +78,13 @@
         ((or "--org")
          (add-hook 'orgb-pre-export-hook 'org-org-export-as-org)
          ;; or could we use a hook in ox-ipynb?
+         )
+        ((or "-D" "--delete-output")
+         ;(add-hook 'orgb-pre-export-hook 'ox-ipynb-remove-solution)
+         ;(add-hook 'ox-ipynb-preprocess-hook 'ox-ipynb-remove-solution)
+         (add-hook 'orgb-pre-export-hook  (lambda ()
+				      (org-babel-map-src-blocks nil
+					(org-babel-remove-result))))
          )
         ((or "-E" "--exclude")
          (setq exclude_tag (pop argv))
