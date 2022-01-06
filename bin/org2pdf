@@ -79,9 +79,7 @@
 
   (if init-file
       (load-file init-file)
-      )
-
-  (load-file (concat this-file-dir "../init.el"))
+  (load-file (concat this-file-dir "../init.el")))
   (setq org-confirm-babel-evaluate nil)
   (orgb-export-buffer-beamer src-file type output-file header-file))
 
