@@ -43,6 +43,10 @@
       ;; run functions in pre-export-hook
       (run-hooks 'orgb-hook)
       (run-hooks 'orgb-pre-export-hook)
+      (princ "remove all org-babel results\n")
+      (org-babel-map-src-blocks nil (org-babel-remove-result))
+      ;;(princ "excecute org-babel in buffer\n")
+      ;;(org-babel-execute-buffer)
       (with-current-buffer (ox-ipynb-export-to-ipynb-buffer)
         (write-file outfile))
       )))
