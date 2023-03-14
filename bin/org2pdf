@@ -77,6 +77,8 @@
       (setq header-file (concat working_dir  header-file))
     )
 
+  (load-file (concat this-file-dir "../init.el"))
+
   (if init-file
       (load-file init-file)
   (load-file (concat this-file-dir "../init.el")))
