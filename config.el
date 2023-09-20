@@ -21,6 +21,8 @@
 
 (org-babel-do-load-languages 'org-babel-load-languages
                              '((jupyter . t)
+                               (emacs-lisp . t)
+                               (latex . t)
                                (python . t)))
 
 ;;; config.el ends here
