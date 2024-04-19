@@ -34,6 +34,4 @@
                         :check-out-commit "a59349bb66d4f5595bc97a940d1669fe77113c8c"
                         ))
 
-(straight-use-package 'jupyter)
-
 ;;; packages.el ends here

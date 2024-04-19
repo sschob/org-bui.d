@@ -17,11 +17,9 @@
 (require 'org-attach)
 (require 'ox-latex)
 (require 'ox-ipynb)
-(require 'jupyter)
 
 (org-babel-do-load-languages 'org-babel-load-languages
-                             '((jupyter . t)
-                               (emacs-lisp . t)
+                             '((emacs-lisp . t)
                                (latex . t)
                                (python . t)))
 
