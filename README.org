@@ -1,3 +1,5 @@
+#+TITLE: README
+#+OPTIONS: toc:ni       l
 * Org-build
 
 Command line tool to export org files to PDF or ipynb.
@@ -19,3 +21,15 @@ Options:
 - Delete RESULTS of cells with =-D= or =--delete=
 - Exclude tags with  =-E TAG= or =--exclude TAG=
 - =--org=:  the file is first exported to ORG to respect =INCLUDE_TAGS= and =EXCLUDE_TAGS= (better use =-E=).
+
+
+* Dockerfile
+Build image using the /docker/ branch of this repo.
+#+begin_src
+docker build . -t org-build
+#+end_src
+
+To build a *pdf* from this file use:
+#+begin_src
+docker run --rm -v $PWD:/workdir:z org-build org2pdf README.org
+#+end_src
